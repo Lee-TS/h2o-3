@@ -116,7 +116,7 @@ public class TargetEncoderRGSTest{
                 hyperSpaceSearchCriteria
         );
 
-        Job<Grid> gs = GridSearch.startGridSearch(Key.make(), walker, parallelism);
+        Job<Grid> gs = GridSearch.startGridSearch(Key.make(), walker, null, parallelism);
 
         Scope.track_generic(gs);
         final Grid grid = gs.get();

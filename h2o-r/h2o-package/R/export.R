@@ -21,7 +21,7 @@
 #' @param sep The field separator character. Values on each line of
 #'        the file will be separated by this character (default ",").
 #' @param compression How to compress the exported dataset
-#         (default none; gzip, bzip2 and snappy available)
+#'        (default none; gzip, bzip2 and snappy available)
 #' @param parts integer, number of part files to export to. Default is to
 #'        write to a single file. Large data can be exported to multiple
 #'        'part' files, where each part file contains subset of the data.
@@ -337,6 +337,7 @@ h2o.saveModelDetails <- function(object, path="", force=FALSE) {
 #'
 #' @param grid_directory A character string containing the path to the folder for the grid to be saved to.
 #' @param grid_id A chracter string with identification of the grid to be saved.
+#' @param save_frames A logical indicating if data frames used by this grid should be saved as well
 #' @return Returns an object that is a subclass of \linkS4class{H2OGrid}.
 #' @examples
 #' \dontrun{
@@ -364,16 +365,17 @@ h2o.saveModelDetails <- function(object, path="", force=FALSE) {
 #'grid <- h2o.loadGrid(grid_path)
 #' }
 #' @export
-h2o.saveGrid <- function(grid_directory, grid_id){
+h2o.saveGrid <- function(grid_directory, grid_id, save_frames=FALSE){
   params <- list()
   params[["grid_directory"]] <- grid_directory
+  params[["save_frames"]] <- save_frames
   
   url <- paste0("Grid.bin/", grid_id,"/export")
   
-  res <- .h2o.__remoteSend(
+  .h2o.__remoteSend(
     url,
     method = "POST",
-    h2oRestApiVersion = 3,.params = params
+    h2oRestApiVersion = 3, .params = params
   )
   
   paste0(grid_directory,"/",grid_id)

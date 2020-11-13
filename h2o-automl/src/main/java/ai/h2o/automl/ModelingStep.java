@@ -67,6 +67,7 @@ public abstract class ModelingStep<M extends Model> extends Iced<ModelingStep> {
                 hyperParams,
                 new GridSearch.SimpleParametersBuilderFactory<>(),
                 searchCriteria,
+                null,
                 GridSearch.SEQUENTIAL_MODEL_BUILDING
         );
     }
